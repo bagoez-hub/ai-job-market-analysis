@@ -1,0 +1,224 @@
+version: "1.0.0"
+
+project:
+  name: "AI Job Market Analysis"
+  description: "Analysis of AI/ML job market trends — September 2023 to September 2025"
+
+# ---------------------------------------------------------------------------
+# Data paths
+# ---------------------------------------------------------------------------
+data:
+  raw_file: "data/raw/ai_job_market.csv"
+  cleaned_file: "data/cleaned/ai_job_market_cleaned.csv"
+  enriched_file: "data/enriched/ai_job_market_enriched.csv"
+  encoding: "utf-8"
+  delimiter: ","
+  date_columns:
+    - posted_date
+  categorical_columns:
+    - industry
+    - experience_level
+    - employment_type
+    - company_size
+    - job_title
+
+# ---------------------------------------------------------------------------
+# Dataset schema constants (from analysis-instructions.md)
+# ---------------------------------------------------------------------------
+dataset:
+  records: 2000
+  date_range:
+    start: "2023-09-01"
+    end: "2025-09-30"
+  schema:
+    experience_levels: ["Entry", "Mid", "Senior"]
+    employment_types: ["Full-time", "Contract", "Remote", "Internship"]
+    company_sizes: ["Startup", "Mid", "Large"]
+    industries:
+      - Automotive
+      - E-commerce
+      - Education
+      - Finance
+      - Healthcare
+      - Retail
+      - Tech
+    job_titles:
+      - AI Product Manager
+      - AI Researcher
+      - Computer Vision Engineer
+      - Data Analyst
+      - Data Scientist
+      - ML Engineer
+      - NLP Engineer
+      - Quant Researcher
+
+# ---------------------------------------------------------------------------
+# Processing pipeline
+# ---------------------------------------------------------------------------
+processing:
+  remove_duplicates:
+    enabled: true
+    subset:
+      - job_id
+  handle_missing:
+    strategy: "default"      # default | drop | impute
+    impute_method: "median"
+    threshold: 0.5           # drop columns with >50% missing
+  outlier_detection:
+    enabled: true
+    method: "iqr"            # iqr | zscore | isolation_forest
+    threshold: 3.0
+
+# ---------------------------------------------------------------------------
+# Feature engineering
+# ---------------------------------------------------------------------------
+features:
+  salary:
+    extract_min: true
+    extract_max: true
+    calculate_avg: true
+    normalize: false
+  skills:
+    parse_method: "comma_split"
+    max_skills: 10
+    create_dummies: false
+  date:
+    extract_year: true
+    extract_month: true
+    extract_quarter: true
+    calculate_days_since_posted: true
+
+# ---------------------------------------------------------------------------
+# Analysis — five thematic areas (from analysis-instructions.md)
+# ---------------------------------------------------------------------------
+analysis:
+  segmentation:
+    group_by:
+      - experience_level
+      - industry
+      - company_size
+      - job_title
+    metrics:
+      - mean_salary
+      - median_salary
+      - job_count
+      - top_skills
+
+  areas:
+    - id: "A1"
+      name: "Salary Trends and Benchmarks"
+      modules: ["kpi_analysis", "exploratory"]
+      priority: high
+    - id: "A2"
+      name: "Technical Skill and Tool Demand"
+      modules: ["exploratory", "segmentation_analysis"]
+      priority: high
+    - id: "A3"
+      name: "Employment Dynamics and Company Profiles"
+      modules: ["segmentation_analysis", "kpi_analysis"]
+      priority: high
+    - id: "A4"
+      name: "Geographic and Industry Demand"
+      modules: ["exploratory", "segmentation_analysis"]
+      priority: medium
+    - id: "A5"
+      name: "Hiring Velocity and Seasonality"
+      modules: ["forecasting_analysis"]
+      priority: medium
+
+  forecasting:
+    enabled: true
+    target: "job_count"
+    time_column: "posted_date"
+    frequency: "M"                  # Monthly
+    horizon: 6                      # 6 months ahead
+    model: "exponential_smoothing"  # prophet | arima | exponential_smoothing
+
+# ---------------------------------------------------------------------------
+# Visualization defaults (from docs-instructions.md)
+# ---------------------------------------------------------------------------
+visualization:
+  style: "whitegrid"
+  palette: "viridis"
+  figure_dpi: 150
+  figure_size: [12, 5]
+  save_format: "png"
+  plotly_theme: "plotly_white"
+  random_seed: 42
+
+  plots:
+    - type: "histogram"
+      column: "salary_avg"
+      title: "Salary Distribution"
+    - type: "boxplot"
+      x: "experience_level"
+      y: "salary_avg"
+      order: ["Entry", "Mid", "Senior"]
+      title: "Salary by Experience Level"
+    - type: "bar"
+      column: "skills_required"
+      top_n: 20
+      title: "Top 20 Most In-Demand Skills"
+    - type: "line"
+      x: "posted_date"
+      y: "job_count"
+      title: "Monthly Job Posting Volume"
+    - type: "heatmap"
+      title: "Correlation Heatmap"
+
+# ---------------------------------------------------------------------------
+# Output settings
+# ---------------------------------------------------------------------------
+output:
+  figures_dir: "outputs/figures"
+  tables_dir: "outputs/tables"
+  exports_dir: "outputs/exports"
+  reports_dir: "reports"
+  exports:
+    - format: "csv"
+      path: "outputs/exports/ai_jobs_summary.csv"
+    - format: "parquet"
+      path: "outputs/exports/ai_jobs_summary.parquet"
+      compression: "snappy"
+  reports:
+    generate_html: true
+    include_plots: true
+
+# ---------------------------------------------------------------------------
+# Validation rules (aligns with validate.py and analysis-instructions.md)
+# ---------------------------------------------------------------------------
+validations:
+  required_columns:
+    - job_id
+    - company_name
+    - job_title
+    - posted_date
+    - experience_level
+    - employment_type
+  nullable_columns:
+    - salary_range_usd
+    - tools_preferred
+  constraints:
+    job_id:
+      unique: true
+    experience_level:
+      allowed_values: ["Entry", "Mid", "Senior"]
+    employment_type:
+      allowed_values: ["Full-time", "Contract", "Remote", "Internship"]
+    company_size:
+      allowed_values: ["Startup", "Mid", "Large"]
+  quality_thresholds:
+    min_completeness: 0.80   # 80% of data must be present
+    max_duplicates: 0.01     # max 1% duplicate job_ids
+
+# ---------------------------------------------------------------------------
+# Notebook / Kaggle settings (from docs-instructions.md)
+# ---------------------------------------------------------------------------
+notebooks:
+  kaggle_input_path: "/kaggle/input/ai-job-market-insights/ai_job_market.csv"
+  local_data_path: "data/raw/ai_job_market.csv"
+  random_seed: 42
+  extra_packages:
+    - "loguru"
+    - "pydantic>=2.0"
+    - "pydantic-settings>=2.0"

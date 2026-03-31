@@ -1,0 +1,48 @@
+paths:
+  # Input data
+  raw: "data/raw/"
+  raw_file: "data/raw/ai_job_market.csv"
+
+  # Processed data
+  cleaned: "data/cleaned/"
+  cleaned_file: "data/cleaned/ai_job_market_cleaned.csv"
+  enriched: "data/enriched/"
+  enriched_file: "data/enriched/ai_job_market_enriched.csv"
+  external: "data/external/"
+  dictionary: "data/dictionary/"
+
+  # Source modules
+  src: "src/"
+  analysis: "src/analysis/"
+  data_pipeline: "src/data/"
+  visuals: "src/visuals/"
+  utils: "src/utils/"
+
+  # Outputs
+  outputs: "outputs/"
+  figures: "outputs/figures/"
+  tables: "outputs/tables/"
+  exports: "outputs/exports/"
+  reports: "reports/"
+
+  # Configuration
+  config: "config/config.yaml"
+  logging_config: "config/logging.yaml"
+
+  # Notebooks
+  notebooks: "notebooks/"
+  exploration: "notebooks/01_exploration/"
+  cleaning: "notebooks/02_cleaning/"
+  analysis_nb: "notebooks/03_analysis/"
+  visuals_nb: "notebooks/04_visuals/"
+
+  # Logs
+  logs: "logs/"
+
+  # Tests
+  tests: "tests/"
+  test_fixtures: "tests/fixtures/"
+
+  # Kaggle runtime
+  kaggle_input: "/kaggle/input/ai-job-market-insights/ai_job_market.csv"
+
