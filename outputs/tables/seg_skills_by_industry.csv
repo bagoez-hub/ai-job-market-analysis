@@ -1,0 +1,71 @@
+industry,skill,count
+Automotive,hugging face,77
+Automotive,cuda,70
+Automotive,sql,70
+Automotive,keras,68
+Automotive,gcp,67
+Automotive,tensorflow,67
+Automotive,pytorch,67
+Automotive,r,63
+Automotive,excel,62
+Automotive,c++,62
+E-commerce,langchain,69
+E-commerce,excel,68
+E-commerce,fastapi,68
+E-commerce,r,67
+E-commerce,tensorflow,67
+E-commerce,aws,65
+E-commerce,power bi,64
+E-commerce,pandas,62
+E-commerce,mlflow,60
+E-commerce,keras,60
+Education,numpy,78
+Education,power bi,73
+Education,fastapi,69
+Education,azure,69
+Education,pandas,66
+Education,excel,63
+Education,python,63
+Education,tensorflow,61
+Education,langchain,60
+Education,reinforcement learning,60
+Finance,fastapi,67
+Finance,tensorflow,65
+Finance,azure,64
+Finance,hugging face,63
+Finance,python,62
+Finance,pandas,62
+Finance,sql,61
+Finance,flask,61
+Finance,excel,60
+Finance,r,59
+Healthcare,tensorflow,70
+Healthcare,excel,65
+Healthcare,pandas,64
+Healthcare,reinforcement learning,60
+Healthcare,mlflow,60
+Healthcare,gcp,59
+Healthcare,pytorch,58
+Healthcare,azure,58
+Healthcare,python,57
+Healthcare,langchain,55
+Retail,scikit-learn,73
+Retail,tensorflow,70
+Retail,reinforcement learning,69
+Retail,python,66
+Retail,aws,65
+Retail,sql,64
+Retail,hugging face,62
+Retail,keras,62
+Retail,gcp,62
+Retail,c++,61
+Tech,cuda,65
+Tech,pandas,65
+Tech,flask,65
+Tech,r,64
+Tech,aws,63
+Tech,reinforcement learning,60
+Tech,pytorch,59
+Tech,sql,58
+Tech,scikit-learn,57
+Tech,keras,56

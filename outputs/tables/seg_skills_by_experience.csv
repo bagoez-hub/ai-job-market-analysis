@@ -1,0 +1,31 @@
+experience_level,skill,count
+Entry,python,156
+Entry,tensorflow,156
+Entry,numpy,155
+Entry,excel,154
+Entry,langchain,152
+Entry,gcp,149
+Entry,reinforcement learning,148
+Entry,azure,147
+Entry,scikit-learn,145
+Entry,fastapi,144
+Mid,pandas,164
+Mid,tensorflow,160
+Mid,keras,158
+Mid,sql,149
+Mid,azure,147
+Mid,fastapi,144
+Mid,scikit-learn,140
+Mid,cuda,139
+Mid,aws,137
+Mid,pytorch,136
+Senior,power bi,146
+Senior,excel,145
+Senior,numpy,145
+Senior,aws,145
+Senior,hugging face,140
+Senior,pytorch,139
+Senior,tensorflow,136
+Senior,reinforcement learning,135
+Senior,fastapi,131
+Senior,cuda,128

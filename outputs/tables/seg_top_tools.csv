@@ -1,0 +1,9 @@
+tool,count,share_pct
+mlflow,513,25.65
+langchain,511,25.55
+fastapi,505,25.25
+kdb+,499,24.95
+bigquery,494,24.7
+tensorflow,487,24.35
+pytorch,475,23.75
+scikit-learn,474,23.7

@@ -24,6 +24,8 @@ dependencies = [
     # Notebooks
     "jupyter>=1.1",
     "ipykernel>=6.29",
+    "pyarrow>=23.0.1",
+    "statsmodels>=0.14.6",
 ]
 
 [dependency-groups]
