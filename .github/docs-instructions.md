@@ -261,8 +261,9 @@ Notebooks (`.ipynb`) in this project are **compiled analysis reports** — final
 
 | Requirement | Rule |
 |-------------|------|
-| **Dataset source** | Read from `/kaggle/input/` path when running on Kaggle |
-| **Local fallback** | Read from `data/raw/` when running locally |
+| **Dataset source** | Read directly from `/kaggle/input/` path when running on Kaggle |
+| **Local fallback** | Read directly from `data/raw/` when running locally |
+| **No config file dependency** | Never read from `config/config.yaml` or any pipeline config files — paths are declared inline in the notebook |
 | **No hardcoded secrets** | Never embed API keys or credentials |
 | **No external file dependencies** | All required data must come from the Kaggle dataset or be generated in-notebook |
 | **Self-contained installs** | Use `!pip install` cells for any non-standard packages |
@@ -272,6 +273,8 @@ Notebooks (`.ipynb`) in this project are **compiled analysis reports** — final
 ### 2.2 Dataset Source Declaration
 
 Every notebook begins with a dataset declaration cell that documents where the data comes from and handles both local and Kaggle paths automatically.
+
+> **Rule**: Data paths are declared **directly in the notebook** as `Path` constants. Do **not** load paths from `config/config.yaml`, `config/paths.yaml`, or any pipeline config file — notebooks must be fully self-contained and runnable on Kaggle without the project's config infrastructure.
 
 ```python
 import os
@@ -336,9 +339,9 @@ Every published notebook must follow this exact cell order:
 [Markdown]  Table of Contents
 [Python]    Package installs (non-standard only)
 [Python]    Imports
-[Python]    Configuration & constants (random seed, figure sizes, etc.)
+[Python]    Inline constants (random seed, figure sizes, palette — no config file loading)
 [Python]    Dataset source declaration + path resolver
-[Python]    Data loading
+[Python]    Data loading (pd.read_csv directly from resolved path)
 [Markdown]  ## 1. Dataset Overview
 [Python]    Shape, dtypes, head(), describe()
 [Markdown]  ## 2. Data Cleaning
@@ -571,6 +574,7 @@ Before publishing to Kaggle, verify every item:
 
 - [ ] **Dataset path resolver** uses `resolve_dataset_path()` with both Kaggle and local paths
 - [ ] **Dataset URL** is linked in the title cell
+- [ ] **No config file loading** — no `load_config()`, no `config.yaml`, no `paths.yaml` referenced anywhere
 - [ ] **All cells run top-to-bottom** without errors (Kernel → Restart & Run All)
 - [ ] **No hardcoded local paths** outside the path resolver function
 - [ ] **Random seed** is set globally (`RANDOM_SEED = 42`)
