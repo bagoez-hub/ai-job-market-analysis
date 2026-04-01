@@ -35,8 +35,11 @@ data/cleaned/
 data/enriched/
 
 # ── Generated outputs ──────────────────────────────────────────────────────────
-outputs/figures/
-logs/
+outputs/
+notebooks/**/outputs/
+
+# ── Logs (all levels) ─────────────────────────────────────────────────────────
+**/logs/
 
 # ── OS artefacts ───────────────────────────────────────────────────────────────
 .DS_Store
