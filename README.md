@@ -73,6 +73,11 @@ Map job concentration by location and industry. Identify high-demand hubs and cr
 Use `posted_date` to build time-series views of posting volume. Detect seasonal cycles and acceleration/deceleration trends.
 **Modules**: `forecasting_analysis.py`
 
+### Area 6 — Salary Prediction and ML Modeling
+Build regression models to predict salary from role, experience, industry, company size, and skill features. Evaluate feature importance and quantify the marginal contribution of each variable to compensation.
+**Modules**: `kpi_analysis.py`, `segmentation_analysis.py`
+**Notebook**: `notebooks/03_analysis/07_salary_prediction.ipynb`
+
 ---
 
 ## 3. Project Structure
@@ -120,10 +125,6 @@ ai_job_market/
 │   └── utils/
 │       ├── helpers.py          # Config loader, composition utilities
 │       └── logger.py           # Loguru setup
-├── tests/
-│   ├── unit/                   # Unit tests per module
-│   ├── integration/            # End-to-end pipeline tests
-│   └── fixtures/               # Shared test data
 ├── main.py                     # Pipeline entry point
 └── pyproject.toml              # Project metadata & tool config
 ```
@@ -140,10 +141,8 @@ Stage 1 — Foundational EDA  (all EDA checkpoints must pass)
 Stage 2 — Parallel Analysis  (run concurrently after Stage 1)
     ├── kpi_analysis.py           (Areas 1 & 3)
     ├── segmentation_analysis.py  (Areas 2, 3 & 4)
-    └── forecasting_analysis.py   (Area 5)
-
-Stage 3 — Reporting
-    plot_utils.py → outputs/figures/  +  outputs/tables/  →  reports/
+    ├── forecasting_analysis.py   (Area 5)
+    └── salary prediction model   (Area 6 — notebook 07)
 ```
 
 ---
@@ -302,6 +301,12 @@ Notebooks are organized by analysis stage and follow the numbered prefix convent
 - Industry-level seasonality differences
 - Time-series forecast for the next two quarters
 
+### Salary Prediction & ML Modeling
+- Regression model predicting salary from role, experience, industry, company size, and skills
+- Feature importance ranking — which variables drive compensation the most
+- Marginal salary premium attributable to each seniority tier
+- Model performance benchmarks (MAE, RMSE, R²) and residual analysis
+
 ---
 
 ## 9. Users of This Analysis
@@ -365,4 +370,4 @@ The main configuration file is `config/config.yaml`. It controls:
 
 ---
 
-*Last Updated: 2026-03-31 | Dataset: `ai_job_market.csv` (2,000 records, Sep 2023 – Sep 2025)*
+*Last Updated: 2026-04-01 | Dataset: `ai_job_market.csv` (2,000 records, Sep 2023 – Sep 2025)*
